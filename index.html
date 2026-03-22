@@ -3,71 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart NID Card Generator</title>
+    <title>NID Professional PDF Generator</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
-    <div class="input-panel">
-        <h3>NID তথ্য ফরম</h3>
-        <input type="text" id="inNameBN" placeholder="নাম (বাংলা)">
-        <input type="text" id="inNameEN" placeholder="Name (English)">
-        <input type="text" id="inFather" placeholder="পিতার নাম">
-        <input type="text" id="inMother" placeholder="মাতার নাম">
-        <input type="text" id="inDOB" placeholder="জন্ম তারিখ (যেমন: 01 Jan 1990)">
-        <input type="text" id="inID" placeholder="NID নম্বর (১০ বা ১৭ ডিজিট)">
-        <input type="text" id="inAddress" placeholder="ঠিকানা (পুরোটা)">
-        <input type="text" id="inIssueDate" placeholder="প্রদানের তারিখ (যেমন: 22/03/2026)">
+    <div class="input-form">
+        <h3>NID তথ্য ফরম (PDF Version)</h3>
+        <div class="grid-inputs">
+            <input type="text" id="inNameBN" placeholder="নাম (বাংলা)">
+            <input type="text" id="inNameEN" placeholder="Name (English)">
+            <input type="text" id="inFather" placeholder="পিতা: মো: বিল্লাল মোল্যা">
+            <input type="text" id="inMother" placeholder="মাতা: সারমিন">
+            <input type="text" id="inDOB" placeholder="Date of Birth: 02 Jan 2002">
+            <input type="text" id="inID" placeholder="ID NO: 5573466512">
+            <input type="text" id="inAddress" placeholder="পুরো ঠিকানা">
+            <input type="text" id="inBlood" placeholder="রক্তের গ্রুপ (O+)">
+            <input type="text" id="inPlace" placeholder="জন্মস্থান">
+            <input type="text" id="inIssueDate" placeholder="প্রদানের তারিখ: 22/03/2026">
+        </div>
         <input type="file" id="inPhoto" accept="image/*">
         <button onclick="generateCard()">কার্ড তৈরি করুন</button>
-        <button id="dlBtn" class="download-btn" onclick="downloadCard()">ডাউনলোড ইমেজ</button>
+        <button id="dlBtn" class="dl-button" onclick="downloadPDF()">PDF ডাউনলোড করুন</button>
     </div>
 
-    <div id="capture-area" class="hidden">
-        <div class="nid-card front">
-            <div class="top-bar">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Government_Seal_of_Bangladesh.svg" class="gov-seal">
-                <div class="top-text">
-                    <p class="gov-name-bn">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</p>
-                    <p class="gov-name-en">Government of the People's Republic of Bangladesh</p>
-                    <p class="card-type">National ID Card / জাতীয় পরিচয় পত্র</p>
+    <div id="nid-pdf-area" class="hidden">
+        <div class="dual-card-container">
+            <div class="nid-card front">
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Government_Seal_of_Bangladesh.svg" class="gov-logo">
+                    <div class="header-txt">
+                        <p class="bn-top">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</p>
+                        <p class="en-top">Government of the People's Republic of Bangladesh</p>
+                        <p class="nid-red">National ID Card / জাতীয় পরিচয় পত্র</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="main-content">
-                <div class="photo-container">
-                    <img id="outPhoto" src="">
+                <div class="card-main">
+                    <div class="photo-box">
+                        <img id="outPhoto" src="">
+                    </div>
+                    <div class="info-box">
+                        <p><span class="lbl">নাম:</span> <span id="outNameBN" class="val-bold"></span></p>
+                        <p><span class="lbl">Name:</span> <span id="outNameEN" class="val-bold"></span></p>
+                        <p><span class="lbl">পিতা:</span> <span id="outFather"></span></p>
+                        <p><span class="lbl">মাতা:</span> <span id="outMother"></span></p>
+                        <p><span class="lbl">Date of Birth:</span> <span id="outDOB" class="red-bold"></span></p>
+                        <p><span class="lbl">ID NO:</span> <span id="outID" class="red-bold"></span></p>
+                    </div>
                 </div>
-                <div class="info-container">
-                    <p><span class="label">নাম:</span> <span id="outNameBN" class="value bn-font"></span></p>
-                    <p><span class="label">Name:</span> <span id="outNameEN" class="value en-font"></span></p>
-                    <p><span class="label">পিতা:</span> <span id="outFather" class="value small"></span></p>
-                    <p><span class="label">মাতা:</span> <span id="outMother" class="value small"></span></p>
-                    <p><span class="label">Date of Birth:</span> <span id="outDOB" class="value red"></span></p>
-                    <p><span class="label">ID NO:</span> <span id="outID" class="value red bold"></span></p>
-                </div>
+                <div id="micro-qr" class="qr-code"></div>
+                <div class="watermark-bg"></div>
             </div>
-            <div class="signature">
-                <p>স্বাক্ষর</p>
-            </div>
-        </div>
 
-        <div class="nid-card back">
-            <p class="back-notice">এই কার্ডটি গণপ্রজাতন্ত্রী বাংলাদেশ সরকারের সম্পত্তি। কার্ডটি ব্যবহারকারী ব্যতীত অন্য কোথাও পাওয়া গেলে নিকটস্থ পোস্ট অফিসে জমা দেবার জন্য অনুরোধ করা হলো।</p>
-            <div class="address-section">
-                <strong>ঠিকানা:</strong> <span id="outAddress"></span>
-            </div>
-            <div class="footer-section">
-                <div class="blood-group">রক্তের গ্রুপ / Blood Group: <span class="red">O+</span></div>
-                <div class="issue-info">
-                    প্রদানের তারিখ: <span id="outIssueDate"></span>
+            <div class="nid-card back">
+                <p class="back-note">এই কার্ডটি গণপ্রজাতন্ত্রী বাংলাদেশ সরকারের সম্পত্তি। কার্ডটি ব্যবহারকারী ব্যতীত অন্য কোথাও পাওয়া গেলে নিকটস্থ পোস্ট অফিসে জমা দেবার জন্য অনুরোধ করা হলো।</p>
+                <div class="address-box">
+                    <strong>ঠিকানা:</strong> <span id="outAddress"></span>
                 </div>
-                <div class="auth-sign">
-                    <p>প্রদানকারী কর্তৃপক্ষের স্বাক্ষর</p>
+                <div class="details-row">
+                    <div class="blood-print">
+                        <p>রক্তের গ্রুপ / Blood Group: <span id="outBlood" class="red-bold"></span></p>
+                        <p class="print-no">মুদ্রণ: ০১</p>
+                    </div>
+                    <p>জন্মস্থান: <span id="outPlace"></span></p>
+                </div>
+                <div class="back-footer">
+                    <div class="auth-box">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Placeholder_Signature.svg" class="auth-sign">
+                        <p>প্রদানকারী কর্তৃপক্ষের স্বাক্ষর</p>
+                    </div>
+                    <div class="issue-date-box">
+                        প্রদানের তারিখ: <span id="outIssueDate"></span>
+                    </div>
+                </div>
+                <div class="barcode-area">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/UPC-A-barcode.svg/1200px-UPC-A-barcode.svg.png" class="barcode-img">
                 </div>
             </div>
-            <div class="barcode-area"></div>
         </div>
     </div>
 
