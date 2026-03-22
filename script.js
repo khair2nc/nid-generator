@@ -1,34 +1,37 @@
 function generateCard() {
-    // ডাটা সেট করা
-    document.getElementById('outNameBN').innerText = document.getElementById('inNameBN').value;
-    document.getElementById('outNameEN').innerText = document.getElementById('inNameEN').value;
-    document.getElementById('outFather').innerText = document.getElementById('inFather').value;
-    document.getElementById('outMother').innerText = document.getElementById('inMother').value;
-    document.getElementById('outDOB').innerText = document.getElementById('inDOB').value;
-    document.getElementById('outID').innerText = document.getElementById('inID').value;
-    document.getElementById('outAddress').innerText = document.getElementById('inAddress').value;
-    document.getElementById('outIssueDate').innerText = document.getElementById('inIssueDate').value;
+    const ids = ['NameBN', 'NameEN', 'Father', 'Mother', 'DOB', 'ID', 'Address', 'Blood', 'Place', 'IssueDate'];
+    ids.forEach(id => {
+        document.getElementById('out' + id).innerText = document.getElementById('in' + id).value;
+    });
 
-    // ফটো সেট করা
+    // ছবি সেট করা
     const file = document.getElementById('inPhoto').files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('outPhoto').src = e.target.result;
-        }
+        reader.onload = function(e) { document.getElementById('outPhoto').src = e.target.result; }
         reader.readAsDataURL(file);
     }
 
-    // বাটন দেখানো
+    // মাইক্রো কিউআর কোড তৈরি (ID দিয়ে)
+    document.getElementById('micro-qr').innerHTML = "";
+    new QRCode(document.getElementById("micro-qr"), {
+        text: document.getElementById('inID').value,
+        width: 45,
+        height: 45
+    });
+
+    document.getElementById('nid-pdf-area').classList.remove('hidden');
     document.getElementById('dlBtn').style.display = 'block';
 }
 
-function downloadCard() {
-    const element = document.getElementById('capture-area');
-    html2canvas(element, { scale: 2 }).then(canvas => {
-        const link = document.createElement('a');
-        link.download = 'My-Digital-NID.png';
-        link.href = canvas.toDataURL();
-        link.click();
-    });
+function downloadPDF() {
+    const element = document.getElementById('nid-pdf-area');
+    const opt = {
+        margin:       0.5,
+        filename:     'Bangladesh_NID_Card.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 3 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+    };
+    html2pdf().set(opt).from(element).save();
 }
