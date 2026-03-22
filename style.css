@@ -1,50 +1,60 @@
-body { font-family: 'Arial', sans-serif; background: #f0f0f0; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-.input-form { background: #fff; padding: 20px; border-radius: 5px; width: 650px; margin-bottom: 30px; }
+body { font-family: 'Arial', sans-serif; background: #f4f4f4; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+.input-form { background: #fff; padding: 20px; border: 1px solid #ccc; width: 600px; margin-bottom: 20px; }
 .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.grid-inputs input { padding: 8px; border: 1px solid #ddd; }
+button { width: 100%; padding: 12px; background: #006a4e; color: #fff; border: none; cursor: pointer; font-weight: bold; margin-top: 10px; }
+.dl-button { background: #28a745; display: none; }
+
 .hidden { display: none; }
 
-/* পাশাপাশি থাকার জন্য কন্টেইনার */
-.dual-card-container { display: flex; gap: 10px; padding: 20px; background: #fff; width: fit-content; }
-
-.nid-card {
-    width: 420px; height: 265px; background: #fff; border: 1.5px solid #555;
-    position: relative; overflow: hidden; box-sizing: border-box; 
-    border-radius: 0px !important; /* কোনা রাউন্ড হবে না */
+/* পাশাপাশি কার্ড কন্টেইনার */
+.dual-card-container { 
+    display: flex; 
+    gap: 10px; 
+    padding: 20px; 
+    background: #fff; 
+    width: 880px; 
+    justify-content: center;
 }
 
-/* Front Side */
-.card-header { display: flex; align-items: center; padding: 5px; border-bottom: 1.5px solid #006a4e; background: #f9fff9; }
-.gov-logo { width: 40px; }
+.nid-card {
+    width: 410px; 
+    height: 260px; 
+    background: #fff; 
+    border: 1.5px solid #333; /* শার্প বর্ডার */
+    position: relative; 
+    overflow: hidden; 
+    box-sizing: border-box;
+    border-radius: 0px !important;
+}
+
+.card-header { display: flex; align-items: center; padding: 5px; border-bottom: 1.5px solid #006a4e; }
+.gov-logo { width: 35px; }
 .header-txt { text-align: center; flex-grow: 1; }
 .bn-top { font-size: 14px; font-weight: bold; color: #006a4e; margin: 0; }
-.nid-red { color: #d32f2f; font-size: 11px; font-weight: bold; }
+.en-top { font-size: 9px; color: #228b22; margin: 0; }
+.nid-red { color: #d32f2f; font-size: 11px; font-weight: bold; margin: 0; }
 
-.card-main { display: flex; padding: 10px; z-index: 2; position: relative; }
-.photo-box { width: 95px; height: 115px; border: 1px solid #999; }
+.card-main { display: flex; padding: 8px; z-index: 5; position: relative; }
+.photo-box { width: 90px; height: 110px; border: 1px solid #999; background: #eee; }
 #outPhoto { width: 100%; height: 100%; object-fit: cover; }
 
-.info-box { padding-left: 10px; font-size: 12px; line-height: 1.4; }
+.info-box { padding-left: 10px; font-size: 12px; line-height: 1.5; }
 .lbl { width: 75px; display: inline-block; }
 .val-bold { font-weight: bold; font-size: 14px; }
 .red-bold { color: #d32f2f; font-weight: bold; }
 
-/* কিউআর কোড পজিশন */
-.qr-code { position: absolute; bottom: 10px; right: 10px; width: 45px; height: 45px; z-index: 3; }
+.qr-code { position: absolute; bottom: 8px; right: 8px; z-index: 10; }
 
 /* Back Side */
-.back-note { font-size: 8px; text-align: center; border-bottom: 1px solid #000; padding: 3px; }
-.address-box { height: 55px; padding: 5px; border-bottom: 1px solid #000; font-size: 11px; }
-.details-row { display: flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid #000; font-size: 10px; }
+.back-note { font-size: 8px; text-align: center; border-bottom: 1px solid #000; padding: 2px; margin: 0; }
+.address-box { height: 50px; padding: 5px; border-bottom: 1px solid #000; font-size: 11px; }
+.details-row { padding: 5px; border-bottom: 1px solid #000; font-size: 10px; }
+.back-footer { display: flex; justify-content: space-between; padding: 5px; font-size: 10px; align-items: flex-end; }
+.auth-box { text-align: center; width: 120px; border-top: 1px solid #000; }
+.auth-sign { width: 40px; }
 
-/* রক্তের গ্রুপ ও মুদ্রণ উপরে থাকবে */
-.blood-print p { margin: 2px 0; }
-
-.back-footer { display: flex; justify-content: space-between; padding: 5px; font-size: 10px; }
-.auth-box { text-align: center; width: 120px; border-top: 1px solid #000; margin-top: 10px; }
-.auth-sign { width: 50px; }
-
-/* বারকোড ব্যাকগ্রাউন্ড সাদা */
-.barcode-area { background: #fff; height: 45px; position: absolute; bottom: 0; width: 100%; border-top: 1px solid #ddd; }
+.barcode-area { background: #fff; height: 45px; position: absolute; bottom: 0; width: 100%; }
 .barcode-img { width: 100%; height: 100%; object-fit: cover; }
 
-.watermark-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150px; opacity: 0.1; }
+.watermark-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 130px; opacity: 0.1; z-index: 1; pointer-events: none; }
