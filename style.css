@@ -1,35 +1,41 @@
-body { font-family: sans-serif; background: #ddd; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-.input-container { background: white; padding: 20px; border-radius: 8px; width: 500px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-.input-container input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
-button { width: 100%; padding: 10px; background: #006a4e; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+.input-panel { background: white; padding: 20px; border-radius: 12px; width: 400px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.input-panel input { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+.download-btn { background: #28a745 !important; display: none; margin-top: 10px; }
 
-.hidden { display: none; }
-.card {
-    width: 500px; height: 300px; background: white; border: 1px solid #999; 
-    border-radius: 12px; position: relative; overflow: hidden; margin-bottom: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2); background-image: linear-gradient(to bottom, #fff, #f0fdf4);
+.hidden { display: block; } /* টেস্ট করার সময় block রাখতে পারেন */
+
+/* NID Card Design */
+.nid-card {
+    width: 500px; height: 310px; background: #f9fbf9; border: 1px solid #aaa;
+    border-radius: 15px; position: relative; padding: 15px; margin-bottom: 20px;
+    box-sizing: border-box; overflow: hidden;
+    background: linear-gradient(135deg, #f0fff4 0%, #ffffff 50%, #e8f5e9 100%);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* Header */
-.card-header { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #006a4e; }
-.logo { width: 45px; height: 45px; margin-right: 10px; }
-.header-text { text-align: center; flex-grow: 1; }
-.bn-gov { font-size: 16px; font-weight: bold; color: #006a4e; margin: 0; }
-.en-gov { font-size: 11px; color: #006a4e; margin: 0; }
-.nid-title { font-size: 12px; color: red; font-weight: bold; margin: 2px 0 0 0; }
+.top-bar { display: flex; align-items: center; border-bottom: 2px solid #006a4e; padding-bottom: 8px; }
+.gov-seal { width: 50px; height: 50px; }
+.top-text { flex-grow: 1; text-align: center; }
+.gov-name-bn { font-size: 16px; font-weight: bold; color: #006a4e; margin: 0; }
+.gov-name-en { font-size: 10px; color: #006a4e; margin: 0; margin-top: -2px; }
+.card-type { font-size: 13px; color: #d32f2f; font-weight: bold; margin: 3px 0 0 0; }
 
-/* Body */
-.card-body { display: flex; padding: 15px; }
-.photo-section { width: 110px; height: 130px; border: 1px solid #ccc; background: #fff; }
+.main-content { display: flex; margin-top: 15px; }
+.photo-container { width: 120px; height: 145px; border: 1px solid #bbb; background: #fff; overflow: hidden; }
 #outPhoto { width: 100%; height: 100%; object-fit: cover; }
-.info-section { padding-left: 15px; font-size: 13px; line-height: 1.5; }
-.label { width: 80px; display: inline-block; font-size: 12px; }
-.bold { font-weight: bold; font-size: 15px; }
-.red-text { color: red; font-weight: bold; }
+
+.info-container { padding-left: 15px; font-size: 14px; line-height: 1.6; color: #333; }
+.label { width: 90px; display: inline-block; font-size: 12px; color: #555; }
+.bn-font { font-weight: bold; font-size: 16px; }
+.en-font { font-weight: bold; font-size: 15px; }
+.red { color: #d32f2f; font-weight: bold; }
+.bold { font-size: 18px; }
 
 /* Back Side */
-.back-top { font-size: 9px; text-align: center; padding: 5px; border-bottom: 1px solid #000; }
-.back-middle { padding: 10px; font-size: 11px; height: 60px; border-bottom: 1px solid #000; }
-.back-bottom { padding: 10px; font-size: 11px; position: relative; }
-.barcode { background: #000; color: white; height: 40px; position: absolute; bottom: 0; width: 100%; text-align: center; letter-spacing: 2px; overflow: hidden; }
+.back { background: #f4f4f4; border: 1px solid #888; }
+.back-notice { font-size: 10px; text-align: center; border-bottom: 1px solid #000; padding-bottom: 5px; }
+.address-section { margin-top: 15px; font-size: 13px; height: 80px; }
+.footer-section { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; font-size: 12px; }
+.auth-sign { text-align: center; border-top: 1px solid #000; width: 150px; padding-top: 5px; }
+.barcode-area { height: 45px; background: #000; margin-top: 15px; border-radius: 4px; }
