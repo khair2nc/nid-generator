@@ -1,0 +1,95 @@
+body {
+    background-color: #f4f4f9;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 350px;
+    margin-bottom: 40px;
+}
+
+.input-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #006a4e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.hidden { display: none; }
+
+/* NID Card Design */
+#nid-card {
+    width: 450px;
+    height: 260px;
+    background: #e8f5e9;
+    border: 2px solid #006a4e;
+    border-radius: 12px;
+    padding: 15px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.card-header {
+    text-align: center;
+    border-bottom: 1.5px solid #006a4e;
+    margin-bottom: 10px;
+}
+
+.card-header p { margin: 0; font-weight: bold; color: #006a4e; }
+.card-header span { font-size: 11px; }
+
+.card-body { display: flex; }
+
+.photo-box {
+    width: 100px;
+    height: 120px;
+    border: 1px solid #aaa;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.info-box {
+    margin-left: 20px;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.dob-text { color: red; font-weight: bold; }
+
+.card-footer {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #cc0000;
+}
