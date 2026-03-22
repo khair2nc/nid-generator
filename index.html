@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NID Card Generator Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- ডাউনলোড ফিচারের জন্য এই লাইব্রেরিটি প্রয়োজন -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+    <div class="input-container">
+        <h2>NID তথ্য পূরণ করুন</h2>
+        <div class="form-grid">
+            <input type="text" id="inNameBN" placeholder="নাম (বাংলা)">
+            <input type="text" id="inNameEN" placeholder="Name (English)">
+            <input type="text" id="inFather" placeholder="পিতার নাম">
+            <input type="text" id="inMother" placeholder="মাতার নাম">
+            <input type="text" id="inDOB" placeholder="জন্ম তারিখ (01 Jan 1990)">
+            <input type="text" id="inID" placeholder="NID নম্বর">
+            <input type="text" id="inAddress" placeholder="ঠিকানা (গ্রাম, ডাকঘর, উপজেলা, জেলা)">
+            <input type="text" id="inIssueDate" placeholder="প্রদানের তারিখ (যেমন: 20/03/2026)">
+            <input type="file" id="inPhoto" accept="image/*">
+        </div>
+        <button onclick="generateCard()">কার্ড তৈরি করুন</button>
+        <button id="downloadBtn" style="display:none; background:#28a745; margin-top:10px;" onclick="downloadCard()">ডাউনলোড করুন (Image)</button>
+    </div>
+
+    <!-- NID কার্ডের মেইন ডিজাইন -->
+    <div id="nid-wrapper" class="hidden">
+        <div id="nid-card-front" class="card">
+            <div class="card-header">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Government_Seal_of_Bangladesh.svg" class="logo">
+                <div class="header-text">
+                    <p class="bn-gov">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</p>
+                    <p class="en-gov">Government of the People's Republic of Bangladesh</p>
+                    <p class="nid-title">National ID Card / জাতীয় পরিচয় পত্র</p>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="photo-section">
+                    <img id="outPhoto" src="">
+                </div>
+                <div class="info-section">
+                    <p><span class="label">নাম:</span> <span id="outNameBN" class="bold"></span></p>
+                    <p><span class="label">Name:</span> <span id="outNameEN" class="bold"></span></p>
+                    <p><span class="label">পিতা:</span> <span id="outFather"></span></p>
+                    <p><span class="label">মাতা:</span> <span id="outMother"></span></p>
+                    <p><span class="label">Date of Birth:</span> <span id="outDOB" class="red-text"></span></p>
+                    <p><span class="label">ID NO:</span> <span id="outID" class="red-text bold"></span></p>
+                </div>
+            </div>
+            <div class="watermark"></div>
+        </div>
+
+        <div id="nid-card-back" class="card">
+            <div class="back-top">
+                এই কার্ডটি গণপ্রজাতন্ত্রী বাংলাদেশ সরকারের সম্পত্তি। কার্ডটি ব্যবহারকারী ব্যতীত অন্য কোথাও পাওয়া গেলে নিকটস্থ পোস্ট অফিসে জমা দেবার জন্য অনুরোধ করা হলো।
+            </div>
+            <div class="back-middle">
+                <p><strong>ঠিকানা:</strong> <span id="outAddress"></span></p>
+            </div>
+            <div class="back-bottom">
+                <div class="blood-group">রক্তের গ্রুপ / Blood Group: <span class="red-text">O+</span></div>
+                <div class="print-info">মুদ্রণ: ০১</div>
+                <div class="sign-area">
+                    <p>প্রদানকারী কর্তৃপক্ষের স্বাক্ষর</p>
+                </div>
+                <div class="issue-date">
+                    প্রদানের তারিখ: <span id="outIssueDate"></span>
+                </div>
+            </div>
+            <div class="barcode">
+                |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
