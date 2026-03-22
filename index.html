@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital NID Card Generator</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .input-form { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px; width: 350px; }
+        .input-form input { width: 100%; margin: 10px 0; padding: 8px; box-sizing: border-box; }
+        
+        /* NID Card Styling */
+        #nid-card {
+            width: 450px;
+            height: 280px;
+            background: linear-gradient(135deg, #e1f5fe 0%, #ffffff 100%);
+            border: 2px solid #006a4e;
+            border-radius: 15px;
+            position: relative;
+            padding: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            display: none; /* শুরুতে কার্ডটি লুকানো থাকবে */
+        }
+        .header { text-align: center; color: #006a4e; font-weight: bold; border-bottom: 1px solid #006a4e; padding-bottom: 5px; margin-bottom: 10px; }
+        .content { display: flex; }
+        .photo-area { width: 100px; height: 120px; border: 1px solid #ccc; background: #eee; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+        .info-area { padding-left: 15px; font-size: 14px; line-height: 1.6; }
+        .label { font-weight: bold; color: #333; }
+        .nid-number { position: absolute; bottom: 20px; right: 20px; color: red; font-size: 18px; font-weight: bold; font-family: 'Courier New', Courier, monospace; }
+        button { background: #006a4e; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; width: 100%; }
+        button:hover { background: #004d39; }
+    </style>
+</head>
+<body>
+
+    <div class="input-form">
+        <h3>NID তথ্য প্রদান করুন</h3>
+        <input type="text" id="inName" placeholder="নাম (বাংলা)">
+        <input type="text" id="inFather" placeholder="পিতার নাম">
+        <input type="text" id="inMother" placeholder="মাতার নাম">
+        <input type="text" id="inDOB" placeholder="জন্ম তারিখ (যেমন: 01 Jan 1990)">
+        <input type="text" id="inID" placeholder="NID নম্বর">
+        <button onclick="generateCard()">কার্ড তৈরি করুন</button>
+    </div>
+
+    <div id="nid-card">
+        <div class="header">গণপ্রজাতন্ত্রী বাংলাদেশ সরকার <br> <span style="font-size: 12px;">National ID Card</span></div>
+        <div class="content">
+            <div class="photo-area">PHOTO</div>
+            <div class="info-area">
+                <div><span class="label">নাম:</span> <span id="outName"></span></div>
+                <div><span class="label">পিতা:</span> <span id="outFather"></span></div>
+                <div><span class="label">মাতা:</span> <span id="outMother"></span></div>
+                <div><span class="label">Date of Birth:</span> <span id="outDOB" style="color: red;"></span></div>
+            </div>
+        </div>
+        <div class="nid-number">ID NO: <span id="outID"></span></div>
+    </div>
+
+    <script>
+        function generateCard() {
+            // ইনপুট থেকে ভ্যালু নেওয়া
+            const name = document.getElementById('inName').value;
+            const father = document.getElementById('inFather').value;
+            const mother = document.getElementById('inMother').value;
+            const dob = document.getElementById('inDOB').value;
+            const id = document.getElementById('inID').value;
+
+            // কার্ডে ভ্যালু বসানো
+            document.getElementById('outName').innerText = name;
+            document.getElementById('outFather').innerText = father;
+            document.getElementById('outMother').innerText = mother;
+            document.getElementById('outDOB').innerText = dob;
+            document.getElementById('outID').innerText = id;
+
+            // কার্ডটি প্রদর্শন করা
+            document.getElementById('nid-card').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
