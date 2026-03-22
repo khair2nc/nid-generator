@@ -1,60 +1,36 @@
-body { font-family: 'Arial', sans-serif; background: #f4f4f4; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-.input-form { background: #fff; padding: 20px; border: 1px solid #ccc; width: 600px; margin-bottom: 20px; }
-.grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.grid-inputs input { padding: 8px; border: 1px solid #ddd; }
-button { width: 100%; padding: 12px; background: #006a4e; color: #fff; border: none; cursor: pointer; font-weight: bold; margin-top: 10px; }
-.dl-button { background: #28a745; display: none; }
+function generateCard() {
+    const fields = ['NameBN', 'NameEN', 'Father', 'Mother', 'DOB', 'ID', 'Address', 'Blood', 'Place', 'IssueDate'];
+    fields.forEach(f => {
+        document.getElementById('out' + f).innerText = document.getElementById('in' + f).value;
+    });
 
-.hidden { display: none; }
+    const photoInput = document.getElementById('inPhoto');
+    if (photoInput.files && photoInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => { document.getElementById('outPhoto').src = e.target.result; };
+        reader.readAsDataURL(photoInput.files[0]);
+    }
 
-/* পাশাপাশি কার্ড কন্টেইনার */
-.dual-card-container { 
-    display: flex; 
-    gap: 10px; 
-    padding: 20px; 
-    background: #fff; 
-    width: 880px; 
-    justify-content: center;
+    // ২য় পেজের নিচে QR কোড
+    document.getElementById('outQR').innerHTML = "";
+    new QRCode(document.getElementById("outQR"), {
+        text: document.getElementById('inID').value,
+        width: 35,
+        height: 35
+    });
+
+    document.getElementById('nid-pdf-area').classList.remove('hidden');
+    document.getElementById('dlBtn').style.display = 'block';
 }
 
-.nid-card {
-    width: 410px; 
-    height: 260px; 
-    background: #fff; 
-    border: 1.5px solid #333; /* শার্প বর্ডার */
-    position: relative; 
-    overflow: hidden; 
-    box-sizing: border-box;
-    border-radius: 0px !important;
+function downloadPDF() {
+    const element = document.getElementById('nid-pdf-area');
+    const opt = {
+        margin:       0.1,
+        filename:     'Original_Size_NID.pdf',
+        image:        { type: 'jpeg', quality: 1 },
+        html2canvas:  { scale: 4, useCORS: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+    };
+    html2pdf().set(opt).from(element).save();
 }
-
-.card-header { display: flex; align-items: center; padding: 5px; border-bottom: 1.5px solid #006a4e; }
-.gov-logo { width: 35px; }
-.header-txt { text-align: center; flex-grow: 1; }
-.bn-top { font-size: 14px; font-weight: bold; color: #006a4e; margin: 0; }
-.en-top { font-size: 9px; color: #228b22; margin: 0; }
-.nid-red { color: #d32f2f; font-size: 11px; font-weight: bold; margin: 0; }
-
-.card-main { display: flex; padding: 8px; z-index: 5; position: relative; }
-.photo-box { width: 90px; height: 110px; border: 1px solid #999; background: #eee; }
-#outPhoto { width: 100%; height: 100%; object-fit: cover; }
-
-.info-box { padding-left: 10px; font-size: 12px; line-height: 1.5; }
-.lbl { width: 75px; display: inline-block; }
-.val-bold { font-weight: bold; font-size: 14px; }
-.red-bold { color: #d32f2f; font-weight: bold; }
-
-.qr-code { position: absolute; bottom: 8px; right: 8px; z-index: 10; }
-
-/* Back Side */
-.back-note { font-size: 8px; text-align: center; border-bottom: 1px solid #000; padding: 2px; margin: 0; }
-.address-box { height: 50px; padding: 5px; border-bottom: 1px solid #000; font-size: 11px; }
-.details-row { padding: 5px; border-bottom: 1px solid #000; font-size: 10px; }
-.back-footer { display: flex; justify-content: space-between; padding: 5px; font-size: 10px; align-items: flex-end; }
-.auth-box { text-align: center; width: 120px; border-top: 1px solid #000; }
-.auth-sign { width: 40px; }
-
-.barcode-area { background: #fff; height: 45px; position: absolute; bottom: 0; width: 100%; }
-.barcode-img { width: 100%; height: 100%; object-fit: cover; }
-
-.watermark-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 130px; opacity: 0.1; z-index: 1; pointer-events: none; }
