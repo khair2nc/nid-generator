@@ -3,35 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NID Professional PDF Generator</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Professional NID Card PDF Generator</title>
+    
+    <!-- প্রয়োজনীয় লাইব্রেরি (অবশ্যই ইন্টারনেটে কানেক্ট থাকতে হবে) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="input-form">
-        <h3>NID তথ্য ফরম (PDF Version)</h3>
+        <h3 style="text-align:center; color:#006a4e;">NID কার্ড জেনারেটর</h3>
         <div class="grid-inputs">
             <input type="text" id="inNameBN" placeholder="নাম (বাংলা)">
             <input type="text" id="inNameEN" placeholder="Name (English)">
-            <input type="text" id="inFather" placeholder="পিতা: মো: বিল্লাল মোল্যা">
-            <input type="text" id="inMother" placeholder="মাতা: সারমিন">
-            <input type="text" id="inDOB" placeholder="Date of Birth: 02 Jan 2002">
+            <input type="text" id="inFather" placeholder="পিতার নাম">
+            <input type="text" id="inMother" placeholder="মাতার নাম">
+            <input type="text" id="inDOB" placeholder="জন্ম তারিখ (02 Jan 2002)">
             <input type="text" id="inID" placeholder="ID NO: 5573466512">
             <input type="text" id="inAddress" placeholder="পুরো ঠিকানা">
             <input type="text" id="inBlood" placeholder="রক্তের গ্রুপ (O+)">
             <input type="text" id="inPlace" placeholder="জন্মস্থান">
-            <input type="text" id="inIssueDate" placeholder="প্রদানের তারিখ: 22/03/2026">
+            <input type="text" id="inIssueDate" placeholder="প্রদানের তারিখ">
         </div>
-        <input type="file" id="inPhoto" accept="image/*">
-        <button onclick="generateCard()">কার্ড তৈরি করুন</button>
-        <button id="dlBtn" class="dl-button" onclick="downloadPDF()">PDF ডাউনলোড করুন</button>
+        <div style="margin-top:10px;">
+            <label>আপনার ছবি আপলোড করুন:</label>
+            <input type="file" id="inPhoto" accept="image/*">
+        </div>
+        <button type="button" onclick="generateCard()">কার্ড তৈরি করুন</button>
+        <button type="button" id="dlBtn" class="dl-button" onclick="downloadPDF()">PDF ডাউনলোড করুন</button>
     </div>
 
+    <!-- এই অংশটি কার্ড হিসেবে আউটপুট দেখাবে -->
     <div id="nid-pdf-area" class="hidden">
         <div class="dual-card-container">
-            <div class="nid-card front">
+            
+            <!-- Front Side -->
+            <div class="nid-card">
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Government_Seal_of_Bangladesh.svg" class="gov-logo">
                     <div class="header-txt">
@@ -42,7 +51,7 @@
                 </div>
                 <div class="card-main">
                     <div class="photo-box">
-                        <img id="outPhoto" src="">
+                        <img id="outPhoto" src="https://via.placeholder.com/100" alt="Photo">
                     </div>
                     <div class="info-box">
                         <p><span class="lbl">নাম:</span> <span id="outNameBN" class="val-bold"></span></p>
@@ -53,11 +62,13 @@
                         <p><span class="lbl">ID NO:</span> <span id="outID" class="red-bold"></span></p>
                     </div>
                 </div>
-                <div id="micro-qr" class="qr-code"></div>
+                <!-- মাইক্রো কিউআর কোড -->
+                <div id="qrcode-box" class="qr-code"></div>
                 <div class="watermark-bg"></div>
             </div>
 
-            <div class="nid-card back">
+            <!-- Back Side -->
+            <div class="nid-card">
                 <p class="back-note">এই কার্ডটি গণপ্রজাতন্ত্রী বাংলাদেশ সরকারের সম্পত্তি। কার্ডটি ব্যবহারকারী ব্যতীত অন্য কোথাও পাওয়া গেলে নিকটস্থ পোস্ট অফিসে জমা দেবার জন্য অনুরোধ করা হলো।</p>
                 <div class="address-box">
                     <strong>ঠিকানা:</strong> <span id="outAddress"></span>
@@ -67,7 +78,7 @@
                         <p>রক্তের গ্রুপ / Blood Group: <span id="outBlood" class="red-bold"></span></p>
                         <p class="print-no">মুদ্রণ: ০১</p>
                     </div>
-                    <p>জন্মস্থান: <span id="outPlace"></span></p>
+                    <p style="margin-top:5px;">জন্মস্থান: <span id="outPlace"></span></p>
                 </div>
                 <div class="back-footer">
                     <div class="auth-box">
@@ -82,8 +93,10 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/UPC-A-barcode.svg/1200px-UPC-A-barcode.svg.png" class="barcode-img">
                 </div>
             </div>
+
         </div>
     </div>
 
+    <script src="script.js"></script>
 </body>
 </html>
